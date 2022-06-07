@@ -16,7 +16,6 @@ def get_free_proxies():
     #print(data)
     table = data[1].split("</textarea>")[0].split("\n")
     table = [i for i in table if i]
-    print(table)
     table.pop(0)
     table.pop(0)
 
@@ -39,8 +38,14 @@ def get_session(proxies):
 
 def tryPagePull(pagenum, proxies):
     global SHOP_URL_Slug
-    s = get_session(proxies)
     
+    #init next proxie
+    session = requests.Session()
+    proxy = proxies[pagenum % len(proxies)]
+    session.proxies = {"http": proxy, "https": proxy}
+    s = session
+
+    #getdata
     data = s.get('https://www.etsy.com/shop/' + SHOP_URL_Slug + '/sold?ref=pagination&page=' + str(pagenum + 1), timeout=1.5).content
     if data != None:
         return data
@@ -48,7 +53,9 @@ def tryPagePull(pagenum, proxies):
         tryPagePull(pagenum, proxies) #recures for the win
 
 def cleanproxies(proxies):
-    for i in range(len(proxies)):
+    print(str(len(proxies)) + " proxies found")
+    i = 0;
+    while(i < len(proxies)):
             # construct an HTTP session
             session = requests.Session()
             # choose one random proxy
@@ -56,9 +63,10 @@ def cleanproxies(proxies):
             session.proxies = {"http": proxy, "https": proxy}
             s = get_session(proxies)
             try:
-                ip =  s.get("http://icanhazip.com", timeout=1.5).text.strip()
+                ip =  s.get("http://icanhazip.com", timeout=.5).text.strip()
                 if ip[0].isdigit():
                     print(ip)
+                    i+=1
                 else:
                     raise Exception
             except Exception as e:
@@ -74,8 +82,13 @@ items = []
 items_count = []
 total_items = 0
 
-proxies = get_free_proxies()
-proxies = cleanproxies(proxies)
+#proxies = get_free_proxies()
+#print(proxies)
+#proxies = cleanproxies(proxies)
+
+proxies = ['164.155.151.0:80']
+
+print(len(proxies))
 
 for i in range(PAGES):
     #page = str(requests.get('https://www.etsy.com/shop/' + SHOP_URL_Slug + '/sold?ref=pagination&page=' + str(i + 1),
