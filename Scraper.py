@@ -9,7 +9,7 @@ PAGES = 487
 def get_free_proxies():
     url = "https://free-proxy-list.net/"
     # get the HTTP response and construct soup object
-    soup = str(bs(requests.get(url).content, 'html.parser'))
+    soup = str(bs(requests.get(url).text, 'html.parser'))
     #print(soup)
     proxies = []
     data = soup.split("Updated at")
@@ -56,7 +56,11 @@ def cleanproxies(proxies):
             session.proxies = {"http": proxy, "https": proxy}
             s = get_session(proxies)
             try:
-                print("Request page with IP:", s.get("http://icanhazip.com", timeout=1.5).text.strip())
+                ip =  s.get("http://icanhazip.com", timeout=1.5).text.strip()
+                if ip[0].isdigit():
+                    print(ip)
+                else:
+                    raise Exception
             except Exception as e:
                 proxies.remove(proxy)
                 print("Removed proxy:", proxy)
