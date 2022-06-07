@@ -35,9 +35,9 @@ for i in range(PAGES):
                 items_count[items.index(title)] += 1
                 total_items += 1
 
-    print(str(round(i/PAGES*100, 2)) +  "% complete    " + str(round(((PAGES - i) * 110 + ((PAGES / 22  - i /22)* 160)) / 60,2)) + " minutes left   " + str(total_items) + " items found")
+    print(str(round(i/PAGES*100, 2)) +  "% complete    " + str(round(((PAGES - i) * 120 + ((PAGES / 22  - i /22)* 160)) / 60,2)) + " minutes left   " + str(total_items) + " items found")
     
-    time.sleep(random.randint(70,140))
+    time.sleep(random.randint(20,140))
     #break to avoid hitting the rate limit ban
     if i % 22 == 0 and i != 0:
         x = random.randint(120, 200)
