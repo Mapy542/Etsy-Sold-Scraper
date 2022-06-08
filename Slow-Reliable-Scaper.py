@@ -1,6 +1,4 @@
 import requests, time, random
-#WORK IN PROGRESS
-#not working yet
 
 #Required INPUTS
 SHOP_URL_Slug = "TMichaelStudio"

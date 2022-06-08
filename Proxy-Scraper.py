@@ -1,6 +1,8 @@
 import requests, time, random
 from bs4 import BeautifulSoup as bs
 
+#WIP
+
 #Required INPUTS
 SHOP_URL_Slug = "TMichaelStudio"
 PAGES = 487
@@ -54,7 +56,7 @@ def tryPagePull(pagenum, proxies):
 
 def cleanproxies(proxies):
     print(str(len(proxies)) + " proxies found")
-    i = 0;
+    i = 0
     while(i < len(proxies)):
             # construct an HTTP session
             session = requests.Session()
@@ -82,11 +84,12 @@ items = []
 items_count = []
 total_items = 0
 
-#proxies = get_free_proxies()
-#print(proxies)
-#proxies = cleanproxies(proxies)
+proxies = get_free_proxies()
+proxies = ['151.106.13.218:1080']
+print(proxies)
+proxies = cleanproxies(proxies)
 
-proxies = ['164.155.151.0:80']
+
 
 print(len(proxies))
 
